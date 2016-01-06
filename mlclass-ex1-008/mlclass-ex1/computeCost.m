@@ -12,8 +12,13 @@ J = 0;
 % ====================== YOUR CODE HERE ======================
 % Instructions: Compute the cost of a particular choice of theta
 %               You should set J to the cost.
+%size(X) %97x2
+%size(y) %97x1
+%size(theta) %2x1
 
+errorTerm = X * theta - y;
 
+J = (0.5 / m) * (errorTerm' * errorTerm);
 
 
 

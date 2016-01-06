@@ -10,6 +10,7 @@ bestEpsilon = 0;
 bestF1 = 0;
 F1 = 0;
 
+
 stepsize = (max(pval) - min(pval)) / 1000;
 for epsilon = min(pval):stepsize:max(pval)
     
@@ -24,7 +25,21 @@ for epsilon = min(pval):stepsize:max(pval)
     %       of 0's and 1's of the outlier predictions
 
 
-
+	predictions = pval < epsilon;
+	tp = sum((yval == 1) & (predictions == 1));
+	fp = sum((yval == 0) & (predictions == 1));
+	fn = sum((yval == 1) & (predictions == 0));
+	prec = 0;
+	if (tp + fp != 0)
+		prec = tp / (tp + fp);
+	endif
+	rec = 0;
+	if (tp + fn != 0)	
+		rec  = tp / (tp + fn);
+	endif
+	if (prec + rec != 0)
+		F1 = (2 * prec * rec) / (prec + rec);
+	endif
 
 
 

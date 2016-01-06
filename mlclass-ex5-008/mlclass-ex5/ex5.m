@@ -165,6 +165,9 @@ pause;
 %
 
 lambda = 0;
+%size(X_poly)
+%size(y)
+
 [theta] = trainLinearReg(X_poly, y, lambda);
 
 % Plot training data and fit

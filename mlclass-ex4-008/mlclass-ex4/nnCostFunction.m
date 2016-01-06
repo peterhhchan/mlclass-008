@@ -30,6 +30,7 @@ J = 0;
 Theta1_grad = zeros(size(Theta1));
 Theta2_grad = zeros(size(Theta2));
 
+
 % ====================== YOUR CODE HERE ======================
 % Instructions: You should complete the code by working through the
 %               following parts.
@@ -62,22 +63,50 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+a1 = [ones(m,1) X];
+z2 = a1 * Theta1';
+m2 = sigmoid(z2);
+sizem2 = size(m2, 1);
+
+a2 = [ones(sizem2, 1) m2];
+z3 = a2 * Theta2';
+a3 = sigmoid(z3);
+
+K = size(a3,2);
+
+yVectorized = eye(num_labels)(y,:);
+
+J = (-yVectorized .* log (a3)) - ((1-yVectorized).*log(1-a3));
+J = sum(J);
+J = sum(J);
+
+t1 = Theta1;
+t1( : , 1 ) = 0;
+t2 = Theta2;
+t2( : , 1 ) = 0;
 
 
+s1 = sum(t1 .* t1);
+s2 = sum(t2 .* t2);
+s3 = (sum(s1)) + (sum(s2));
+J1 = (lambda * s3) / (2*m);
+
+J = J / m;
+J += J1;
 
 
+delta3 = a3 - yVectorized;
+delta2 = delta3 * Theta2;
+delta2 = delta2(:, 2:end);
+delta2 = delta2 .* sigmoidGradient(z2);
+Theta1_grad +=  delta2' * a1;
+Theta2_grad +=  delta3' * a2;
 
-
-
-
-
-
-
-
-
-
-
-
+Theta1_grad += lambda * t1;
+Theta2_grad += lambda * t2;
+	
+Theta1_grad /= m;
+Theta2_grad /= m;
 
 
 % -------------------------------------------------------------

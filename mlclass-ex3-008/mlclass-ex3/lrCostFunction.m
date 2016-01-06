@@ -37,7 +37,16 @@ grad = zeros(size(theta));
 %
 
 
+hyp = sigmoid(X*theta);
+cost = -y' * log( hyp) - (1-y)'*(log(1-hyp));
 
+thetaNew = theta;
+thetaNew(1) = 0;
+theta_squared = thetaNew' * thetaNew;
+
+J = (cost + 0.5 * lambda * theta_squared)/ m;
+grad = (X' * (hyp - y) +  thetaNew * lambda)/ m;
+grad = (1/m) * sum((hyp - y) .* X) .+ ((lambda/m) * theta(2:end));
 
 
 

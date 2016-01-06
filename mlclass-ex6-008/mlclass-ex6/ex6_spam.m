@@ -30,8 +30,9 @@ fprintf('\nPreprocessing sample email (emailSample1.txt)\n');
 
 % Extract Features
 file_contents = readFile('emailSample1.txt');
+t=cputime;
 word_indices  = processEmail(file_contents);
-
+printf('Total cpu time: %f seconds\n', cputime-t);
 % Print Stats
 fprintf('Word Indices: \n');
 fprintf(' %d', word_indices);
@@ -49,7 +50,9 @@ fprintf('\nExtracting features from sample email (emailSample1.txt)\n');
 
 % Extract Features
 file_contents = readFile('emailSample1.txt');
+t=cputime;
 word_indices  = processEmail(file_contents);
+printf('Total cpu time: %f seconds\n', cputime-t);
 features      = emailFeatures(word_indices);
 
 % Print Stats
@@ -129,7 +132,9 @@ filename = 'spamSample1.txt';
 
 % Read and predict
 file_contents = readFile(filename);
+
 word_indices  = processEmail(file_contents);
+printf('Total cpu time: %f seconds\n', cputime-t)
 x             = emailFeatures(word_indices);
 p = svmPredict(model, x);
 
